@@ -1,0 +1,10 @@
+.DS_Store
+
+# Created by https://www.gitignore.io
+### PhpStorm ###
+*.iml
+
+## Directory-based project format:
+.idea/
+
+app/logs/debug.log
