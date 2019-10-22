@@ -27,9 +27,6 @@ if (!isset($params['url'], $params['public_key'], $params['private_key'])) {
 }
 
 try {
-    // Create an API client object
-    $objClient = new RapidSpike\API\Client($params['public_key'], $params['private_key'], $params['url']);
-
     if (!isset($params['domain_list']) && !file_exists($params['domain_list'])) {
         throw new Exception('Missing a valid domain list');
     }
@@ -44,6 +41,8 @@ try {
     $monitor_test_regions = ["us-west-1", "us-east-1"];
 
     foreach ($arrDomainList as $key => $domain_name) {
+        $objClient = new RapidSpike\API\Client($params['public_key'], $params['private_key'], $params['url']);
+        
         // domain_name = store9061.marcos.com, label is the number
         $label = str_replace('.marcos.com', '', str_replace('store', '', $domain_name));
 
@@ -60,6 +59,7 @@ try {
          * CREATE THE WEBSITE
          */
         try {
+            usleep(500000);
             echo "  Creating...", PHP_EOL;
 
             // Build create website POST body
@@ -83,7 +83,7 @@ try {
             echo "  UUID: {$website_uuid}", PHP_EOL;
         } catch (Exception $e) {
             echo 'ERRORS', PHP_EOL, $e->getMessage(), PHP_EOL, PHP_EOL;
-            echo json_encode($e, JSON_PRETTY_PRINT), PHP_EOL;
+            sleep(1);
             continue;
         }
 
@@ -103,7 +103,7 @@ try {
             }
         } catch (Exception $e) {
             echo 'ERRORS', PHP_EOL, $e->getMessage(), PHP_EOL, PHP_EOL;
-            echo json_encode($e, JSON_PRETTY_PRINT), PHP_EOL;
+            sleep(2);
             continue;
         }
 
@@ -131,11 +131,11 @@ try {
             }
         } catch (Exception $e) {
             echo 'ERRORS', PHP_EOL, $e->getMessage(), PHP_EOL, PHP_EOL;
-            echo json_encode($e, JSON_PRETTY_PRINT), PHP_EOL;
+            sleep(3);
+            continue;
         }
 
-        echo "  All good, moving on after 1 second.", PHP_EOL;
-        sleep(1);
+        echo "  All good, moving on after 0.5 seconds.", PHP_EOL;
     }
 } catch (\Exception $e) {
     echo 'Fail', PHP_EOL, $e->getMessage(), PHP_EOL, PHP_EOL;
