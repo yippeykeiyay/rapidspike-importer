@@ -1,38 +1,10 @@
 <?php
 
-// Autoloader
-if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
-    include __DIR__ . '/../vendor/autoload.php';
-} else if (file_exists(__DIR__ . '/../../../autoload.php')) {
-    include __DIR__ . '/../../../autoload.php';
-} else {
-    exit('Fail - missing autoloader');
-}
-
-// Organise the parameters
-$params = array();
-if ($argc > 0) {
-    // All args written with equals in
-    foreach ($argv as $arg) {
-        if (strpos($arg, '=') !== false) {
-            list($key, $value) = explode('=', $arg);
-            $params[$key] = $value;
-        }
-    }
-}
-
-// Validate we have what we need
-if (!isset($params['url'], $params['public_key'], $params['private_key'])) {
-    exit('Missing required parts. Required params: url, public_key and private_key.');
-}
+require_once '_bootstrap.php';
 
 try {
-    if (!isset($params['domain_list']) && !file_exists($params['domain_list'])) {
-        throw new Exception('Missing a valid domain list');
-    }
-
-    // Load the domain list
-    $import_list = str_replace(',,,', '', file_get_contents($params['domain_list']));
+    // Standardise the domain list
+    $import_list = str_replace(',,,', '', $domain_list);
 
     $arrList = [];
     foreach (explode(PHP_EOL, $import_list) as $key => $item) {

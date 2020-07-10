@@ -1,5 +1,6 @@
 {
     "require": {
-        "rapidspike/rapidspike-api-wrapper-php": "^1.0"
+        "rapidspike/rapidspike-api-wrapper-php": "^1.0",
+        "rapidspike/rapidspike-utils": "dev-master"
     }
 }
