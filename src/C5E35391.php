@@ -8,8 +8,8 @@ try {
 
     echo count($arrDomainList) . ' domains to import!', PHP_EOL;
 
-    $monitor_testing_period = 5;
-    $monitor_test_regions = ["us-west-1", "us-east-1"];
+    $monitor_testing_period = 15;
+    $monitor_test_regions = ["us-west-1", "us-east-1", "us-east-2"];
 
     foreach ($arrDomainList as $key => $domain_name) {
         $objClient = new RapidSpike\API\Client($params['public_key'], $params['private_key'], $params['url']);
